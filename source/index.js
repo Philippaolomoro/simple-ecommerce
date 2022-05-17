@@ -1,4 +1,4 @@
-import app from "./server.js";
+import app from "./server.js"
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
@@ -26,3 +26,5 @@ export default function index(){
       })
   })
 }
+
+index()

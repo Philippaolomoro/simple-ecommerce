@@ -1,0 +1,29 @@
+version: '3'
+services: 
+  api-server:
+    image: api-server
+    build: .
+    ports:
+      - "5050:5050"
+    networks:
+      - ecommerce-app
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - mongo    
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - ecommerce-app
+    volumes:
+      - mongo-data:/data/db
+
+networks:
+  ecommerce-app:
+    driver: bridge
+volumes:
+  mongo-data:
+    driver: local
