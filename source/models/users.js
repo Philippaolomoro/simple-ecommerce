@@ -1,24 +1,33 @@
 import mongoose from "mongoose";
-import bcrypt from "bcryptjs/dist/bcrypt";
+import bcryptjs from "bcryptjs";
 
-const UserSchema = new mongoose.Schema({
-  userName: {
-    type: String,
+const UserSchema = new mongoose.Schema(
+  {
+    userName: {
+      type: String,
+      required: [true, "Please enter a user name"],
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: [true, "Please enter a password"],
+    },
+    role: {
+      type: String,
+      enum: ["buyer", "seller"],
+      required: [true, "Please select a role"],
+    },
   },
-  password: {
-    type: String,
-  },
-  role: {
-    type: String,
-    enum: [buyer, seller],
-  },
-});
+  {
+    timestamps: true
+  }
+);
 
-UserSchema.pre("save", async function (next) {
+UserSchema.pre("save", async (next) => {
   try {
-    const salt = await bcrypt.genSalt(8);
-    const passwordHash = await bcrypt.hashSync(this.password, salt);
-    if (this.isModified("password")) {
+    const salt = await bcryptjs.genSalt(8);
+    const passwordHash = await bcryptjs.hashSync(this.password, salt);
+    if (this.isModified("password") || this.isNew) {
       this.password = passwordHash;
       next();
     }
@@ -27,4 +36,16 @@ UserSchema.pre("save", async function (next) {
   }
 });
 
-module.exports = mongoose.model("User", UserSchema);
+UserSchema.methods.comparePassword = async (password, callback) => {
+  await bcryptjs.compare(password, this.password, (err, isMatch) => {
+    if (err) {
+      return callback(err);
+    } else {
+      callback(null, isMatch);
+    }
+  });
+};
+
+const userModel = mongoose.model("User", UserSchema);
+
+export default userModel;

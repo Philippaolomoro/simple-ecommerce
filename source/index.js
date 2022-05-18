@@ -14,7 +14,7 @@ export default function index() {
       useUnifiedTopology: true,
     })
     .catch((err) => {
-      console.error(err.stack);
+      console.error(err.message);
       process.exit(1);
     })
     .then(async () => {
