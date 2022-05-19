@@ -56,7 +56,7 @@ const catalogController = {
 
   getCatalogOfSeller: async(req, res) => {
     try {
-      const sellerCatalog = await catalogModel.find({seller_id: req.params.seller_id}).lean()
+      const sellerCatalog = await catalogModel.find({seller_id: req.params.seller_id}).populate("product_id").lean()
 
       return res.status(200).json({
         sellerCatalog,
