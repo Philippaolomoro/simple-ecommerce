@@ -12,5 +12,11 @@ orderRoute.post(
   orderController.createAnOrder
 );
 
+orderRoute.get(
+  "/seller/orders",
+  authorizeUser,
+  checkRole(["seller"]),
+  orderController.getAnOrder
+)
 
 export default orderRoute;

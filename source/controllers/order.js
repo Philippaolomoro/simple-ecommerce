@@ -1,13 +1,6 @@
 import orderModel from "../models/order.js";
 import catalogModel from "../models/catalog.js";
-import productModel from "../models/product.js";
 import userModel from "../models/users.js";
-
-// check if the product selected exists using its id and catalogId
-const isProductExist = (products, { productId, catalogId }) =>
-  products.some(
-    (product) => product._id === productId && product.catalog_id === catalogId
-  );
 
 const orderController = {
   createAnOrder: async (req, res) => {
@@ -56,7 +49,11 @@ const orderController = {
 
   getAnOrder: async (req, res) => {
     try {
-      // TODO get an order for a particular seller by seller
+      const sellerOrders = await orderModel.find({seller_id: res.user.id}).lean()
+      return res.status(200).json({
+        data: sellerOrders,
+        message: "All your orders retrieved successfully"
+      })
     } catch (err) {
       return res.status(500).json({
         error: err.message,
