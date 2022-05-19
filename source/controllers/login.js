@@ -31,7 +31,6 @@ const loginController = async (req, res) => {
         );
 
         return res.status(200).json({
-          user,
           data: accessToken,
           message: "User logged in successfully"
         })

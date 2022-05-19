@@ -13,7 +13,7 @@ router.get("/", (req, res) =>
   })
 );
 
-router.use("/signup", signupRoute);
+router.use("/auth", signupRoute);
 router.use("/auth", loginRoute);
 router.use(catalogRoute);
 router.use(orderRoute);

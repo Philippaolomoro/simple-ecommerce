@@ -21,8 +21,7 @@ const signupController = async (req, res) => {
           return;
         }
         return res.status(200).json({
-          data: newUser,
-          message: "User saved successfully",
+          message: "You have been registered successfully",
         });
       });
     }   

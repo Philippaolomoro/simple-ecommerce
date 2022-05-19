@@ -19,6 +19,4 @@ catalogRoute.get(
   catalogController.getCatalogOfSeller
 );
 
-
-
 export default catalogRoute;
