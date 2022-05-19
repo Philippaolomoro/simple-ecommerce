@@ -36,15 +36,19 @@ UserSchema.pre("save", async function (next) {
   }
 });
 
-UserSchema.methods.comparePassword = async function (password, callback) {
-  await bcryptjs.compare(password, this.password, (err, isMatch) => {
-    if (err) {
-      return callback(err);
-    } else {
-      callback(null, isMatch);
-    }
-  });
-};
+// UserSchema.methods.comparePassword = async function (password, callback) {
+//   await bcryptjs.compare(password, this.password, (err, isMatch) => {
+//     if (err) {
+//       return callback(err);
+//     } else {
+//       callback(null, isMatch);
+//     }
+//   });
+// };
+
+UserSchema.methods.comparePassword = async function comparePassword(data){
+  return bcryptjs.compare(data, this.password)
+}
 
 const userModel = mongoose.model("User", UserSchema);
 

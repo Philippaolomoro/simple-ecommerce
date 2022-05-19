@@ -1,7 +1,8 @@
 import express from "express";
 const router = express.Router();
 
-import signupRoute from "../routes/signup.js"
+import signupRoute from "../routes/signup.js";
+import loginRoute from "../routes/login.js"
 
 router.get("/", (req, res) => 
   res.status(200).json({
@@ -17,5 +18,6 @@ router.get("*", (req, res) =>
 );
 
 router.use("/signup", signupRoute);
+router.use("/auth", loginRoute);
 
 export default router;
