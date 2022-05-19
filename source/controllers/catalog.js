@@ -6,6 +6,12 @@ const catalogController = {
   createCatalog: async(req, res) => {
     try {
       const seller = await userModel.findOne({_id: res.user.id});
+      const sellersCatalog = await catalogModel.findOne({seller_id: res.user.id})
+      if(sellersCatalog){
+        return res.status(409).json({
+          error: "You are not allowed to have more than one catalog"
+        })
+      }
       if(seller){
         const catalog = await catalogModel.findOne({name: req.body.name})
         if(catalog){
@@ -56,7 +62,7 @@ const catalogController = {
 
   getCatalogOfSeller: async(req, res) => {
     try {
-      const sellerCatalog = await catalogModel.find({seller_id: req.params.seller_id}).populate("product_id").lean()
+      const sellerCatalog = await catalogModel.findOne({seller_id: req.params.seller_id}).populate("product_id").lean()
 
       return res.status(200).json({
         sellerCatalog,
