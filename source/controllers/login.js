@@ -1,5 +1,5 @@
 import userModel from "../models/users.js";
-import jwtMiddleware from "../middleware/jwtMiddleware.js";
+import generateToken from "../middleware/generateToken.js";
 
 const loginController = async (req, res) => {
   try {
@@ -23,7 +23,11 @@ const loginController = async (req, res) => {
         const tokenSecret = process.env.ACCESS_TOKEN_SECRET
         const tokenExpiration = process.env.ACCESS_TOKEN_EXPIRATION
 
-        const accessToken = jwtMiddleware.generateToken(userObj, tokenSecret, tokenExpiration)
+        const accessToken = generateToken(
+          userObj,
+          tokenSecret,
+          tokenExpiration
+        );
 
         return res.status(200).json({
           data: accessToken,
