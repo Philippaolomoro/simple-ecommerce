@@ -11,14 +11,14 @@ const  authorizeUser = (req, res, next) => {
   jwt.verify(
     accessToken,
     process.env.ACCESS_TOKEN_SECRET,
-    function (err, decoded) {
+    (err, decoded) => {
       if (err) {
         res.status(401).json({
           error: err.message,
           message: "Unauthorized access",
         });
       }
-      req.decoded = decoded;
+      res.user = decoded;
       next();
     }
   );
