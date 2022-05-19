@@ -11,6 +11,14 @@ const OrderSchema = new mongoose.Schema(
         ref: "Product",
       },
     ],
+    buyer_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    seller_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   {
     timestamps: true,

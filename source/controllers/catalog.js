@@ -22,7 +22,8 @@ const catalogController = {
           const mappedProducts = req.body.product_id.map((item)=>{
             const product = new productModel({
               name: item.name,
-              price: item.price
+              price: item.price,
+              catalog_id: newCatalog._id
             })
 
             product.save();
