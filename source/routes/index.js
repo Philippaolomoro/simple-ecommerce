@@ -12,12 +12,6 @@ router.get("/", (req, res) =>
   })
 )
 
-router.get("*", (req, res) => 
-  res.status(404).json({ 
-    error: "not found" 
-  })
-);
-
 router.use("/signup", signupRoute);
 router.use("/auth", loginRoute);
 router.use(catalogRoute);

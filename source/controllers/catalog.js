@@ -52,6 +52,22 @@ const catalogController = {
         message: "Internal server error, please try again"
       })
     }
+  },
+
+  getCatalogOfSeller: async(req, res) => {
+    try {
+      const sellerCatalog = await catalogModel.find({seller_id: req.params.seller_id}).lean()
+
+      return res.status(200).json({
+        sellerCatalog,
+        message: "All catalog of this seller gotten successfully"
+      })
+    } catch (err) {
+      return res.status(500).json({
+        error: err.message,
+        message: "Internal server error, please try again",
+      });
+    }
   }
 };
 
